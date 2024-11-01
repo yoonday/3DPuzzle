@@ -1005,7 +1005,10 @@ MonoBehaviour:
   ignoreTargetMask:
     serializedVersion: 2
     m_Bits: 183
-  offsetFactor: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  offsetFactor: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
