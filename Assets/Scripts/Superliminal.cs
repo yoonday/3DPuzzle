@@ -10,6 +10,7 @@ public class Superliminal : MonoBehaviour
     [Header("Parameters")]
     public LayerMask targetMask;        // 레이캐스트 대상 레이어
     public LayerMask ignoreTargetMask;  // 레이케스트 시 무시할 대상 레이어 (플레이어, 타겟 오브젝트 제외)
+    public LayerMask groundMask;        // 바닥 확인용 레이어
     public float offsetFactor;          // 오브젝트가 벽에 겹치지 않도록 위치 조정
 
     float originalDistance;             // 카메라와 대상 간의 원래 거리
@@ -94,6 +95,15 @@ public class Superliminal : MonoBehaviour
 
             // 원래 크기와 비율 곱해서 타겟 크기 설정(변화)
             target.localScale = targetScale * originalScale;
+
+            // 중앙을 기준으로 커지므로, 크기 변화에 따라 높이를 보정
+            float heightAdjustment = (target.localScale.y * originalScale - originalScale) / 2;
+
+            RaycastHit floorHit;
+            if (Physics.Raycast(target.position + Vector3.up * 0.1f, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
+            {
+                target.position = new Vector3(target.position.x, floorHit.point.y + heightAdjustment + offsetFactor, target.position.z);
+            }
         }
     }
 }
