@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta; 
     public bool canLook = true;
 
-
+    public event Action optionToggle;
     private Rigidbody _rigidbody;
 
     private void Awake()
@@ -116,4 +118,19 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    public void OnOptionInput(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            optionToggle?.Invoke();
+            ToggleCursor();
+        }
+    }
+
+    private void ToggleCursor()
+    {
+        bool isLocked = Cursor.lockState == CursorLockMode.Locked;
+        Cursor.lockState = isLocked ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !canLook;
+    }
 }
