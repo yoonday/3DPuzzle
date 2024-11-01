@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System.IO;
+using System.ComponentModel;
 
 public class DataManager : MonoBehaviour
 {
     static GameObject container;
 
-    static DataManager instance;
+    static DataManager _instance;
 
     public static DataManager Instance
     {
-        get
-        {
-            if (instance == null)
+         get
+         {
+            if (!_instance)
             {
                 container = new GameObject();
                 container.name = "DataManager";
-                instance = container.AddComponent(typeof(DataManager)) as DataManager;            
+                _instance = container.AddComponent(typeof(DataManager)) as DataManager;
                 DontDestroyOnLoad(container);
             }
-            return instance;
-        }
+            return _instance;
+         }
     }
 
     string GameDataFileName = "GameData.json";
@@ -37,7 +38,15 @@ public class DataManager : MonoBehaviour
         {
             string FromJsonData = File.ReadAllText(filepath);
             data = JsonUtility.FromJson<Data>(FromJsonData);
-            print("불러오기 성공");
+            print(filepath);
+
+            for (int i = 0; i < data.isComplete.Length; i++)
+            {
+                if (data.isComplete[i])
+                {
+                    CharacterManager.Instance.Player.transform.position = data.respawnPoint[i];
+                }
+            }
         }
     }
 
@@ -48,10 +57,6 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(filePath, ToJsonData);
 
-        print("저장 성공");
-        for(int i = 0; i < data.isUnlock.Length; i++)
-        {
-            print($"{i}번 체크포인트 확인");
-        }
+        print(filePath);       
     }
 }

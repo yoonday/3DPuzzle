@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Data : MonoBehaviour
+[Serializable]
+public class Data
 {
-    public bool[] isUnlock = new bool[2];
+    public bool[] isComplete = new bool[4];
+    public Vector3[] respawnPoint = new Vector3[4];
 }
