@@ -42,27 +42,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Option",
+                    "name": "ObjectRotateX",
                     "type": "Button",
-                    "id": "fd6a5d27-8ac0-4b40-85c6-50f36c521471",
+                    "id": "703b7a1d-0fe9-499e-868a-c2053f2c049a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RotateX",
+                    "name": "ObjectRotateY",
                     "type": "Button",
-                    "id": "d891334c-882b-4773-b690-36ed9f73f161",
+                    "id": "e913f359-9927-4f85-aa5b-986191b72c35",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RotateY",
+                    "name": "Toggle",
                     "type": "Button",
-                    "id": "af8cac55-2ab8-4aa9-b443-0c98cf6e7477",
+                    "id": "04375184-06ab-4e29-90e8-512cff7634a3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -70,17 +70,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "5d1519c3-0b82-4342-a59c-3e02da016874",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "d7e428d6-7f23-4faa-91ba-479b6ce14ee3",
@@ -161,7 +150,7 @@
                 {
                     "name": "",
                     "id": "a768c1a3-fb78-43bd-99e1-38b80b454d5e",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -171,34 +160,34 @@
                 },
                 {
                     "name": "",
-                    "id": "286ef27a-d60a-4c0c-ba38-1a63460fe052",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Option",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "be39f301-fbff-487c-a2dd-be87b67be3b0",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a84a5538-5036-4baa-a7d2-d8cbb4472efe",
+                    "id": "1a83fa50-3a37-4d5c-afc2-596600e69fca",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RotateY",
+                    "action": "ObjectRotateX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f285f6c-a196-4c32-9629-7c0d3efb32b8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ObjectRotateY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a9e2920-2e93-469c-8113-0d5fa0b6d475",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

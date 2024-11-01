@@ -64,6 +64,14 @@ public class Interaction : MonoBehaviour
         if (context.phase == InputActionPhase.Started && curInteractable != null)
         {
             curInteractable.OnInteract();
+
+            // Superliminal 인스턴스에서 target 설정
+            Superliminal superliminalInstance = FindObjectOfType<Superliminal>();
+            if (superliminalInstance != null)
+            {
+                superliminalInstance.target = curInteractGameObject.transform;
+            }
+
             curInteractGameObject = null;
             curInteractable = null;
             promptText.gameObject.SetActive(false);
