@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public interface IInteractable
 {
     public void OnInteract();
+    public void EndInteract();
 }
 
 public class Interaction : MonoBehaviour
@@ -83,7 +84,7 @@ public class Interaction : MonoBehaviour
         }
         else if (context.phase == InputActionPhase.Started && interacting)
         {
-            curInteractable.OnInteract();
+            curInteractable.EndInteract();
             interacting = false;
             curInteractGameObject = null;
             curInteractable = null;

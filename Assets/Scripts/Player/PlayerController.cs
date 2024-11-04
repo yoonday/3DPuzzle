@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         if(context.phase == InputActionPhase.Started)
         {
+            
             optionToggle?.Invoke();
             ToggleCursor();
         }

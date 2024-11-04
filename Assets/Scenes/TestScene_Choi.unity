@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 65565696}
   - component: {fileID: 65565695}
   - component: {fileID: 65565694}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,8 +513,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreTargetMask:
     serializedVersion: 2
+    m_Bits: 183
+  groundMask:
+    serializedVersion: 2
     m_Bits: 128
-  offsetFactor: 0
+  offsetFactor: 0.5
 --- !u!1 &1379293820
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,7 +917,7 @@ MonoBehaviour:
   rotationSpeed: 0.5
   ignoreTargetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
 --- !u!114 &2022284814
 MonoBehaviour:
   m_ObjectHideFlags: 0

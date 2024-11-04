@@ -33,22 +33,16 @@ public class Object : MonoBehaviour, IInteractable
     }
     public void OnInteract()
     {
-        if (isInteracting)
-        {
-            _rigidbody.isKinematic = false;
-            isInteracting = false;
-        }
-        else // (!isInteracting)
-        {
-            _rigidbody.isKinematic = true;
+        _rigidbody.isKinematic = true;
+        isInteracting = true;
 
-            isInteracting = true;
-
-            originalScale = transform.localScale.x;
-            originalDistance = Vector3.Distance(transform.localPosition, cameraTransform.position);
-        }
-
-        
+        originalScale = transform.localScale.x;
+        originalDistance = Vector3.Distance(transform.localPosition, cameraTransform.position);
+    }
+    public void EndInteract()
+    {
+        _rigidbody.isKinematic = false;
+        isInteracting = false;
     }
 
     private void Resize()
