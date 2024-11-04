@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ObjectRotateX",
+                    "name": "ObjectRotateZ",
                     "type": "Button",
                     "id": "703b7a1d-0fe9-499e-868a-c2053f2c049a",
                     "expectedControlType": "Button",
@@ -150,7 +150,7 @@
                 {
                     "name": "",
                     "id": "a768c1a3-fb78-43bd-99e1-38b80b454d5e",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -165,7 +165,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ObjectRotateX",
+                    "action": "ObjectRotateZ",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

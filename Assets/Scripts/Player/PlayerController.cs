@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta; 
     public bool canLook = true;
 
-
+    public event Action optionToggle;
     private Rigidbody _rigidbody;
 
     private void Awake()
@@ -35,7 +37,11 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;  // 커서를 게임 뷰의 중앙에 고정
     }
 
-    
+    private void Update()
+    {
+        Debug.DrawRay(/*CharacterManager.Instance.Player.*/transform.position + new Vector3(0, 1, 0), transform.forward, Color.red);
+    }
+
     void FixedUpdate()
     {
         Move();
@@ -116,4 +122,19 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    public void OnOptionInput(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            optionToggle?.Invoke();
+            ToggleCursor();
+        }
+    }
+
+    private void ToggleCursor()
+    {
+        bool isLocked = Cursor.lockState == CursorLockMode.Locked;
+        Cursor.lockState = isLocked ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !canLook;
+    }
 }
