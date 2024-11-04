@@ -5,21 +5,22 @@ using UnityEngine;
 public class Superliminal : MonoBehaviour
 {
     [Header("Components")]
-    public Transform target;            // The target object we picked up for scaling
+    public Transform target;            // 타겟 오브젝트
 
     [Header("Parameters")]
-    public LayerMask targetMask;        // The layer mask used to hit only potential targets with a raycast
-    public LayerMask ignoreTargetMask;  // The layer mask used to ignore the player and target objects while raycasting
-    public float offsetFactor;          // The offset amount for positioning the object so it doesn't clip into walls
+    public LayerMask targetMask;        // 레이캐스트 대상 레이어
+    public LayerMask ignoreTargetMask;  // 레이케스트 시 무시할 대상 레이어 (플레이어, 타겟 오브젝트 제외)
+    public LayerMask groundMask;        // 바닥 확인용 레이어
+    public float offsetFactor;          // 오브젝트가 벽에 겹치지 않도록 위치 조정
 
-    float originalDistance;             // The original distance between the player camera and the target
-    float originalScale;                // The original scale of the target objects prior to being resized
-    Vector3 targetScale;                // The scale we want our object to be set to each frame
+    float originalDistance;             // 카메라와 대상 간의 원래 거리
+    float originalScale;                // 크기 조정 전 타겟 오브젝트의 원래 크기
+    Vector3 targetScale;                // 각 프레임에서 설정할 오브젝트 목표 크기
 
     void Start()
     {
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; // 커서 잠금 상태로 설정
     }
 
     void Update()
@@ -30,73 +31,81 @@ public class Superliminal : MonoBehaviour
 
     void HandleInput()
     {
-        // Check for left mouse click
+        // 마우스 좌 클릭 확인
         if (Input.GetMouseButtonDown(0))
         {
-            // If we do not currently have a target
+            // 현재 타겟이 설정되지 않은 경우
             if (target == null)
             {
-                // Fire a raycast with the layer mask that only hits potential targets
+                // 레이어 마스크로 잠재적 대상에만 맞는 레이 캐스트 발사
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, targetMask))
                 {
-                    // Set our target variable to be the Transform object we hit with our raycast
+                    // 레이캐스트에 맞은 Transform 오브젝트를 타겟으로 설정
                     target = hit.transform;
 
-                    // Disable physics for the object
+                    // 타겟의 물리 효과 비활성화
                     target.GetComponent<Rigidbody>().isKinematic = true;
 
-                    // Calculate the distance between the camera and the object
+                    // 카메라와 타겟 오브젝트의 거리 계산
                     originalDistance = Vector3.Distance(transform.position, target.position);
 
-                    // Save the original scale of the object into our originalScale Vector3 variabble
+                    // 타겟의 원래 스케일 값을 저장
                     originalScale = target.localScale.x;
 
-                    // Set our target scale to be the same as the original for the time being
+                    // 타겟의 크기가 원래 크기와 동일함
                     targetScale = target.localScale;
                 }
+                Debug.Log("선택됨");
             }
-            // If we DO have a target
+            // 타겟이 설정되어 있다면 (더이상 사이즈 조정 X)
             else
             {
-                // Reactivate physics for the target object
+                // 타겟 오브젝트 물리 효과 재활성화
                 target.GetComponent<Rigidbody>().isKinematic = false;
 
-                // Set our target variable to null
+                // 타겟 변수 초기화
                 target = null;
+                Debug.Log("사이즈 변경 완료");
             }
         }
     }
 
     void ResizeTarget()
     {
-        // If our target is null
+        // 타겟이 없을 경우 리턴
         if (target == null)
         {
-            // Return from this method, nothing to do here
             return;
         }
 
-        // Cast a ray forward from the camera position, ignore the layer that is used to acquire targets
-        // so we don't hit the attached target with our ray
+        // 카메라 위치에서 레이캐스트 발사, 무시할 오브젝트 제외하고 충돌 검출
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
         {
-            // Set the new position of the target by getting the hit point and moving it back a bit
-            // depending on the scale and offset factor
+            // 충돌 지점 기준으로 오프셋 적용하여 타겟 위치 설정
             target.position = hit.point - transform.forward * offsetFactor * targetScale.x;
 
-            // Calculate the current distance between the camera and the target object
+            // 카메라와 타겟 간의 현재 거리 계산
             float currentDistance = Vector3.Distance(transform.position, target.position);
 
-            // Calculate the ratio between the current distance and the original distance
+            // 현재 거리와 원래 거리 간의 비율 계산
             float s = currentDistance / originalDistance;
 
-            // Set the scale Vector3 variable to be the ratio of the distances
+            // 거리 비율에 따라 크기 벡터 설정
             targetScale.x = targetScale.y = targetScale.z = s;
 
-            // Set the scale for the target objectm, multiplied by the original scale
+            // 원래 크기와 비율 곱해서 타겟 크기 설정(변화)
             target.localScale = targetScale * originalScale;
+
+            // 중앙을 기준으로 커지므로, 크기 변화에 따라 높이를 보정
+            float heightAdjustment = (target.localScale.y * originalScale - originalScale) / 2;
+
+            RaycastHit floorHit;
+            if (Physics.Raycast(target.position + Vector3.up * 0.1f, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
+            {
+                target.position = new Vector3(target.position.x, floorHit.point.y + heightAdjustment + offsetFactor, target.position.z);
+            }
         }
     }
 }
