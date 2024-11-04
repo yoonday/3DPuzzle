@@ -49,7 +49,7 @@ public class Superliminal : MonoBehaviour
                     // Calculate the distance between the camera and the object
                     originalDistance = Vector3.Distance(transform.position, target.position);
 
-                    // Save the original scale of the object into our originalScale Vector3 variabble
+                    //. Save the original scale of the object into our originalScale Vector3 variabble
                     originalScale = target.localScale.x;
 
                     // Set our target scale to be the same as the original for the time being

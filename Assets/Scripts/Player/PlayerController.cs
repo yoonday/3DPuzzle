@@ -37,7 +37,11 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;  // 커서를 게임 뷰의 중앙에 고정
     }
 
-    
+    private void Update()
+    {
+        Debug.DrawRay(/*CharacterManager.Instance.Player.*/transform.position + new Vector3(0, 1, 0), transform.forward, Color.red);
+    }
+
     void FixedUpdate()
     {
         Move();
