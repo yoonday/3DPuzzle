@@ -56,7 +56,7 @@ public class Superliminal : MonoBehaviour
                     // 타겟의 크기가 원래 크기와 동일함
                     targetScale = target.localScale;
                 }
-                Debug.Log("선택됨");
+                Debug.Log($"선택됨: {target.name}");
             }
             // 타겟이 설정되어 있다면 (더이상 사이즈 조정 X)
             else
