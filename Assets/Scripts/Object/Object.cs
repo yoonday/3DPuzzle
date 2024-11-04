@@ -8,6 +8,7 @@ public class Object : MonoBehaviour, IInteractable
 {
     private bool isInteracting = false;
     public LayerMask ignoreTargetMask;
+    public LayerMask groundMask;
 
     private Vector3 initialPosition;
     public float offsetFactor;
@@ -64,6 +65,16 @@ public class Object : MonoBehaviour, IInteractable
             targetScale.x = targetScale.y = targetScale.z = s;
 
             transform.localScale = targetScale * originalScale;
+
+            // 중앙을 기준으로 커지므로, 크기 변화에 따라 높이를 보정
+            float heightAdjustment = (transform.localScale.y * originalScale - originalScale) / 2;
+
+            RaycastHit floorHit;
+            if (Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
+            {
+                transform.position = new Vector3(transform.position.x, floorHit.point.y + heightAdjustment + offsetFactor, transform.position.z);
+            }
         }
     }
+    
 }
