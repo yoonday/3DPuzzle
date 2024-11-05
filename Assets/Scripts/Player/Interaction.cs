@@ -18,9 +18,9 @@ public class Interaction : MonoBehaviour
     public GameObject curInteractGameObject;
     private IInteractable curInteractable;
 
-    [SerializeField] private float rotationSpeed = 0.5f;
-    private bool isRotateZ = false;
-    private bool isRotateY = false;
+    //[SerializeField] private float rotationSpeed = 0.5f;
+    //private bool isRotateZ = false;
+    //private bool isRotateY = false;
     private bool interacting = false;
     private Camera camera;
 
@@ -57,14 +57,14 @@ public class Interaction : MonoBehaviour
             }
         }
 
-        if (isRotateY)
-        {
-            curInteractGameObject.transform.Rotate(0, rotationSpeed, 0);
-        }
-        if(isRotateZ)
-        {
-            curInteractGameObject.transform.Rotate(0, 0, rotationSpeed);
-        }
+        //if (isRotateY)
+        //{
+        //    curInteractGameObject.transform.Rotate(0, rotationSpeed, 0);
+        //}
+        //if(isRotateZ)
+        //{
+        //    curInteractGameObject.transform.Rotate(0, 0, rotationSpeed);
+        //}
     }
 
 
@@ -90,12 +90,13 @@ public class Interaction : MonoBehaviour
     {
         if(context.phase == InputActionPhase.Started && interacting)
         {
-            isRotateZ = true;
-            //curInteractGameObject.transform.Rotate(0, 0, rotationSpeed);
+            //isRotateZ = true;
+            curInteractGameObject.GetComponent<Object>().RotateZ();
         }
         if (context.phase == InputActionPhase.Canceled)
         {
-            isRotateZ = false;
+            curInteractGameObject.GetComponent<Object>().EndRotateZ();
+            //isRotateZ = false;
         }
     }
 
@@ -103,13 +104,13 @@ public class Interaction : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Performed && interacting)
         {
-            isRotateY = true;
-            //curInteractGameObject.transform.Rotate(0, rotationSpeed, 0);
+            curInteractGameObject.GetComponent<Object>().RotateY();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            isRotateY = false;
+            curInteractGameObject.GetComponent<Object>().EndRotateY();
+            //isRotateY = false;
         }
     }
 }
