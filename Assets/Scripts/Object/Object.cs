@@ -50,30 +50,28 @@ public class Object : MonoBehaviour, IInteractable
     private void Resize()
     {
         RaycastHit hit;
-        Vector3[] directions = { cameraTransform.forward, cameraTransform.right, -cameraTransform.right, cameraTransform.up, -cameraTransform.up }; // ¿©·¯ ¹æÇâÀ¸·Î Ray ½î±â
-
-        foreach (Vector3 direction in directions)
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
         {
-            if (Physics.Raycast(cameraTransform.position, direction, out hit, Mathf.Infinity, ignoreTargetMask))
+            transform.position = hit.point - offsetFactor * targetScale.x * cameraTransform.forward;
+
+            float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
+
+            float s = currentDistance / originalDistance;
+            targetScale.x = targetScale.y = targetScale.z = s;
+            transform.localScale = targetScale * originalScale;
+
+            if (Physics.CheckBox(transform.position, transform.localScale * 0.5f, Quaternion.identity, groundMask))
             {
-                transform.position = hit.point - offsetFactor * targetScale.x * direction; // Ãæµ¹ À§Ä¡¿¡ ¸ÂÃç À§Ä¡ Á¶Á¤
-
-                float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
-                float s = currentDistance / originalDistance;
-
-                targetScale.x = targetScale.y = targetScale.z = s;
-                transform.localScale = targetScale * originalScale;
-
-                // ³ôÀÌ º¸Á¤ Ãß°¡
-                float heightAdjustment = transform.localScale.y / 2;
-                RaycastHit floorHit;
-                if (Physics.Raycast(transform.position, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
+                // CheckBox ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Raycastï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, groundMask))
                 {
-                    transform.position = new Vector3(transform.position.x + offsetFactor, floorHit.point.y + heightAdjustment + offsetFactor, transform.position.z);
+                   Vector3 correctionDirection = hit.normal; // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
+                    transform.position += correctionDirection * offsetFactor;
                 }
-                break;              
+
             }
+
+
         }
     }
-    
 }
