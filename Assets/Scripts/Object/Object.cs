@@ -56,7 +56,7 @@ public class Object : MonoBehaviour, IInteractable
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
         {
-            transform.position = hit.point - offsetFactor * targetScale.x * transform.forward;
+            transform.position = hit.point - offsetFactor * targetScale.x * cameraTransform.forward;
 
             float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
 
@@ -66,9 +66,12 @@ public class Object : MonoBehaviour, IInteractable
 
             if (Physics.CheckBox(transform.position, transform.localScale * 0.5f, Quaternion.identity, groundMask))
             {
-                // 충돌이 발생하면, 충돌 방향의 반대 방향으로 이동하여 겹침 방지
-                Vector3 correctionDirection = hit.normal; 
-                transform.position += correctionDirection * offsetFactor;
+                // CheckBox 충돌 후 새로 Raycast로 법선을 얻어 충돌 보정
+                if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, groundMask))
+                {
+                    Vector3 correctionDirection = hit.normal; // 새로운 충돌 법선
+                    transform.position += correctionDirection * offsetFactor;
+                }
             }
 
 
