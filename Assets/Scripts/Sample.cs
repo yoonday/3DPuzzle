@@ -7,7 +7,6 @@ public class Sample : MonoBehaviour
     private void Start()
     {
         DataManager.Instance.LoadGameData();
-        Test(3);
     }
 
     private void OnApplicationQuit()
@@ -17,7 +16,12 @@ public class Sample : MonoBehaviour
 
     public void Test(int test)
     {
-        DataManager.Instance.data.isComplete[test]= true;
         DataManager.Instance.SaveGameData();
+    }
+
+    public void Restart()
+    {
+        DataManager.Instance.LoadGameData();
+        Debug.Log("´­¸²");
     }
 }

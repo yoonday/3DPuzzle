@@ -69,9 +69,9 @@ public class Object : MonoBehaviour, IInteractable
                 RaycastHit floorHit;
                 if (Physics.Raycast(transform.position, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
                 {
-                    transform.position = new Vector3(transform.position.x, floorHit.point.y + heightAdjustment + offsetFactor, transform.position.z);
+                    transform.position = new Vector3(transform.position.x + offsetFactor, floorHit.point.y + heightAdjustment + offsetFactor, transform.position.z);
                 }
-                break; 
+                break;              
             }
         }
     }

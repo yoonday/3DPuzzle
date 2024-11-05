@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.IO;
 using System.ComponentModel;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class DataManager : MonoBehaviour
 
             for (int i = 0; i < data.isComplete.Length; i++)
             {
-                if (data.isComplete[i] && data.respawnPoint[i] != Vector3.zero)
+                if (data.isComplete[i])
                 {
                     CharacterManager.Instance.Player.transform.position = data.respawnPoint[i];
                 }
