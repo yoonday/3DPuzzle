@@ -102,7 +102,7 @@ public class Superliminal : MonoBehaviour
             float heightAdjustment = target.localScale.y / 2;
 
             RaycastHit floorHit;
-            if (Physics.Raycast(target.position, Vector3.down, out floorHit, heightAdjustment + 0.1f, groundMask))
+            if (Physics.Raycast(target.position, Vector3.down, out floorHit, heightAdjustment + 1.1f, groundMask))
             {
                 target.position = new Vector3(target.position.x, floorHit.point.y + heightAdjustment + offsetFactor, target.position.z);
             }
