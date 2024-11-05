@@ -27,28 +27,54 @@ public class DataManager : MonoBehaviour
          }
     }
 
+    private void Awake()
+    {
+        LoadData();
+    }
+
     string GameDataFileName = "GameData.json";
 
     public Data data = new Data();
 
-    public void LoadGameData()
+    public void LoadData()
     {
         string filepath = Application.persistentDataPath + "/" + GameDataFileName;
 
-        if(File.Exists(filepath))
+        if (File.Exists(filepath))
         {
             string FromJsonData = File.ReadAllText(filepath);
             data = JsonUtility.FromJson<Data>(FromJsonData);
             print(filepath);
+        }
+    }
 
-            for (int i = 0; i < data.isComplete.Length; i++)
+    public void LoadStage(int stageNum)
+    {
+        if (data.isComplete[stageNum])
+        {
+            SceneManager.LoadScene("TestScene_Seo");
+            CharacterManager.Instance.Player.transform.position = data.respawnPoint[stageNum];
+        }
+    }
+
+    public void LoadCheckPoint()
+    {          
+        int lastCompletedStage = -1;
+
+        for (int i = data.isComplete.Length - 1; i >= 0; i--)
+        {
+            if (data.isComplete[i])
             {
-                if (data.isComplete[i])
-                {
-                    CharacterManager.Instance.Player.transform.position = data.respawnPoint[i];
-                }
+                lastCompletedStage = i;
+                break;
             }
         }
+
+        if (lastCompletedStage != -1)
+        {
+            SceneManager.LoadScene("TestScene_Seo");
+            CharacterManager.Instance.Player.transform.position = data.respawnPoint[lastCompletedStage];
+        }     
     }
 
     public void SaveGameData()
@@ -57,7 +83,11 @@ public class DataManager : MonoBehaviour
         string filePath = Application.persistentDataPath + "/" + GameDataFileName;
 
         File.WriteAllText(filePath, ToJsonData);
-
         print(filePath);       
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameData();
     }
 }
