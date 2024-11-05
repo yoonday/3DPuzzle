@@ -8,14 +8,17 @@ public interface IButtonLinkedObject
 public class ButtonObject : MonoBehaviour
 {
     [SerializeField] private LayerMask objectLayer;
-    [SerializeField] private IButtonLinkedObject linkedObject;
-
-
+    [SerializeField] private GameObject linkedObject;
+    private IButtonLinkedObject buttonLinkedObject;
+    private void Start()
+    {
+        buttonLinkedObject = linkedObject.GetComponent<IButtonLinkedObject>();     
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(IsLayerMatched(objectLayer, other.gameObject.layer))
         {
-            linkedObject.OnButton();
+            buttonLinkedObject.OnButton();
         }
     }
 
@@ -23,14 +26,14 @@ public class ButtonObject : MonoBehaviour
     {
         if (IsLayerMatched(objectLayer, other.gameObject.layer))
         {
-            linkedObject.EndButton();
+            buttonLinkedObject.EndButton();
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (IsLayerMatched(objectLayer, other.gameObject.layer))
         {
-            linkedObject.OnButton();
+            buttonLinkedObject.OnButton();
         }
     }
 

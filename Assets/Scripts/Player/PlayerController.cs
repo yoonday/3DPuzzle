@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.DrawRay(/*CharacterManager.Instance.Player.*/transform.position + new Vector3(0, 1, 0), transform.forward, Color.red);
+        //Debug.DrawRay(/*CharacterManager.Instance.Player.*/transform.position + new Vector3(0, 1, 0), transform.forward, Color.red);
     }
 
     void FixedUpdate()

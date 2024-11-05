@@ -18,6 +18,8 @@ public class Object : MonoBehaviour, IInteractable
     private Transform cameraTransform;
     private Rigidbody _rigidbody;
 
+    [SerializeField] private float maxScale = 15f;
+
     private void Start()
     {
         cameraTransform = Camera.main.transform;

@@ -21,7 +21,6 @@ public class Interaction : MonoBehaviour
     [SerializeField] private float rotationSpeed = 0.5f;
     private bool isRotateZ = false;
     private bool isRotateY = false;
-    //private Superliminal superliminal;
     private bool interacting = false;
     private Camera camera;
 
@@ -35,11 +34,6 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
-        //RaycastHit hit2;
-        //if (Physics.Raycast(CharacterManager.Instance.Player.transform.position + new Vector3(0, 1f, 0), transform.forward, out hit2, Mathf.Infinity, ignoreTargetMask))
-        //{
-        //    Debug.Log(hit2.point);
-        //}
 
         if (Time.time - lastCheckTime > checkRate && !interacting)
         {
