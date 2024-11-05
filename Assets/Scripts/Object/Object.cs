@@ -54,30 +54,24 @@ public class Object : MonoBehaviour, IInteractable
     private void Resize()
     {
         RaycastHit hit;
-        Vector3[] directions = { cameraTransform.forward, cameraTransform.right, -cameraTransform.right, cameraTransform.up, -cameraTransform.up }; // 여러 방향으로 Ray 쏘기
-
-        foreach (Vector3 direction in directions)
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
         {
-            if (Physics.Raycast(cameraTransform.position, direction, out hit, Mathf.Infinity, ignoreTargetMask))
+            transform.position = hit.point - offsetFactor * targetScale.x * transform.forward;
+
+            float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
+
+            float s = currentDistance / originalDistance;
+            targetScale.x = targetScale.y = targetScale.z = s;
+            transform.localScale = targetScale * originalScale;
+
+            if (Physics.CheckBox(transform.position, transform.localScale * 0.5f, Quaternion.identity, groundMask))
             {
-                transform.position = hit.point - offsetFactor * targetScale.x * direction; // 충돌 위치에 맞춰 위치 조정
-
-                float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
-                float s = currentDistance / originalDistance;
-
-                targetScale.x = targetScale.y = targetScale.z = s;
-                transform.localScale = targetScale * originalScale;
-
-                // 높이 보정 추가
-                float heightAdjustment = transform.localScale.y / 2;
-                RaycastHit floorHit;
-                if (Physics.Raycast(transform.position, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
-                {
-                    transform.position = new Vector3(transform.position.x, floorHit.point.y + heightAdjustment + offsetFactor, transform.position.z);
-                }
-                break; 
+                // 충돌이 발생하면, 충돌 방향의 반대 방향으로 이동하여 겹침 방지
+                Vector3 correctionDirection = hit.normal; 
+                transform.position += correctionDirection * offsetFactor;
             }
+
+
         }
     }
-    
 }
