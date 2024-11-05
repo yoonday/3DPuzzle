@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ClearCondition : MonoBehaviour
 {
-    Collider collider;
+    Collider _collider;
     Data data;
 
     private void Start()
     {
-        collider = GetComponent<Collider>();
+        _collider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
