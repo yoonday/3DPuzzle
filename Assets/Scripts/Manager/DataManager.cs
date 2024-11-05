@@ -42,7 +42,7 @@ public class DataManager : MonoBehaviour
 
             for (int i = 0; i < data.isComplete.Length; i++)
             {
-                if (data.isComplete[i])
+                if (data.isComplete[i] && data.respawnPoint[i] != Vector3.zero)
                 {
                     CharacterManager.Instance.Player.transform.position = data.respawnPoint[i];
                 }
