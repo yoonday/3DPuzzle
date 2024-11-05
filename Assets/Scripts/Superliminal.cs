@@ -56,7 +56,7 @@ public class Superliminal : MonoBehaviour
                     // 타겟의 크기가 원래 크기와 동일함
                     targetScale = target.localScale;
                 }
-                Debug.Log("선택됨");
+                Debug.Log($"선택됨: {target.name}");
             }
             // 타겟이 설정되어 있다면 (더이상 사이즈 조정 X)
             else
@@ -99,10 +99,10 @@ public class Superliminal : MonoBehaviour
             target.localScale = targetScale * originalScale;
 
             // 중앙을 기준으로 커지므로, 크기 변화에 따라 높이를 보정
-            float heightAdjustment = (target.localScale.y * originalScale - originalScale) / 2;
+            float heightAdjustment = target.localScale.y / 2;
 
             RaycastHit floorHit;
-            if (Physics.Raycast(target.position + Vector3.up * 0.1f, Vector3.down, out floorHit, Mathf.Infinity, groundMask))
+            if (Physics.Raycast(target.position, Vector3.down, out floorHit, heightAdjustment + 1.1f, groundMask))
             {
                 target.position = new Vector3(target.position.x, floorHit.point.y + heightAdjustment + offsetFactor, target.position.z);
             }
