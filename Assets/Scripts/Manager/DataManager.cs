@@ -77,6 +77,8 @@ public class DataManager : MonoBehaviour
     {
         // 씬에 있는 모든 오브젝트의 초기 위치 저장
         Transform[] allObjects = FindObjectsOfType<Transform>();
+        data.isComplete[1] = true;
+        Debug.Log(data.respawnPoint[1]);
 
         foreach (var obj in allObjects)
         {
@@ -129,7 +131,6 @@ public class DataManager : MonoBehaviour
                 pair.Key.transform.localScale = pair.Value.scale;
             }
 
-            //SceneManager.LoadScene("TestScene_Seo");
             CharacterManager.Instance.Player.transform.position = data.respawnPoint[lastCompletedStage];
         }
     }

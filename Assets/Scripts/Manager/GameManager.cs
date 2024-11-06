@@ -33,5 +33,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int StageNum = 0;
+    public int stageNum;
 }
