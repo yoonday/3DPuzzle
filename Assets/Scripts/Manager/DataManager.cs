@@ -31,21 +31,45 @@ public class DataManager : MonoBehaviour
 
     public static DataManager Instance
     {
-         get
-         {
+        get
+        {
             if (!_instance)
             {
                 container = new GameObject();
                 container.name = "DataManager";
                 _instance = container.AddComponent(typeof(DataManager)) as DataManager;
-                DontDestroyOnLoad(container);
             }
             return _instance;
-         }
+        }
     }
+
+    //public static DataManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            _instance = new GameObject(nameof(DataManager)).AddComponent<DataManager>();
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
     private void Awake()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        
         LoadData();
     }
 
@@ -56,7 +80,7 @@ public class DataManager : MonoBehaviour
 
         foreach (var obj in allObjects)
         {
-            if (obj.gameObject != CharacterManager.Instance.Player.gameObject || obj.gameObject != Camera.main.gameObject)
+            if (obj.gameObject != CharacterManager.Instance.Player || obj.gameObject != Camera.main)
             {
                 originalStates[obj.gameObject] = new ObjectState(obj.localPosition, obj.localScale);
             }
@@ -72,7 +96,6 @@ public class DataManager : MonoBehaviour
         {
             string FromJsonData = File.ReadAllText(filepath);
             data = JsonUtility.FromJson<Data>(FromJsonData);
-            print(filepath);
         }
     }
 
@@ -80,7 +103,7 @@ public class DataManager : MonoBehaviour
     {
         if (data.isComplete[stageNum])
         {
-            SceneManager.LoadScene("Stage");
+            //SceneManager.LoadScene("Stage");
             CharacterManager.Instance.Player.transform.position = data.respawnPoint[stageNum];
         }
     }
@@ -116,8 +139,7 @@ public class DataManager : MonoBehaviour
         string ToJsonData = JsonUtility.ToJson(data, true);
         string filePath = Application.persistentDataPath + "/" + GameDataFileName;
 
-        File.WriteAllText(filePath, ToJsonData);
-        print(filePath);       
+        File.WriteAllText(filePath, ToJsonData);     
     }
 
     private void OnApplicationQuit()
