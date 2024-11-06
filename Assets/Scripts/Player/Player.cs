@@ -9,7 +9,15 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        CharacterManager.Instance.Player = this;
+        if (CharacterManager.Instance != null)
+        {
+            CharacterManager.Instance.Player = this;
+        }
+        else
+        {
+
+        }
         controller = GetComponent<PlayerController>();
+
     }
 }

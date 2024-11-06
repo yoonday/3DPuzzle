@@ -7,14 +7,22 @@ using UnityEngine.SceneManagement;
 
 public class OptionUI : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
+    private AudioSource audioSource;
     [SerializeField] private Slider bgmSlider;
 
+    //[SerializeField] private AudioSource SFXSource;
+    //[SerializeField] private Slider sfxSlider;
 
     private void Start()
     {
+        audioSource = AudioManager.Instance.gameObject.GetComponent<AudioSource>();
         CharacterManager.Instance.Player.controller.optionToggle += OptionToggle;
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        BGMVolumeControl();
     }
 
     private void OptionToggle()
@@ -25,10 +33,14 @@ public class OptionUI : MonoBehaviour
         gameObject.SetActive(!isActive);
     }
 
+    private void BGMVolumeControl()
+    {
+        audioSource.volume = bgmSlider.value;
+    }
     public void Resume()
     {
         OptionToggle();
-        CharacterManager.Instance.Player.controller.ToggleCursor(); // 
+        CharacterManager.Instance.Player.controller.ToggleCursor(); // 바꿔야 하는데 어떻게 바꿔야할지 모르겠음
     }
     
     public void Restart()
