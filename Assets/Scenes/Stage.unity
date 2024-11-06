@@ -1533,7 +1533,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!54 &321776173
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2079,7 +2078,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!65 &344664339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3300,6 +3298,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   linkedObject: {fileID: 1693745802}
+  requireNumber: 1
   isCompareTag: 0
   objectTag: 
 --- !u!65 &577813034
@@ -9347,7 +9346,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!1 &1257370848
 GameObject:
   m_ObjectHideFlags: 0
@@ -9711,7 +9709,7 @@ Transform:
   m_GameObject: {fileID: 1331475759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 37.7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9752,7 +9750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4589a0629a29df4c94ee1017525fa4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 6
   jumpPower: 80
   groundLayerMask:
     serializedVersion: 2
@@ -9760,7 +9758,7 @@ MonoBehaviour:
   cameraContainer: {fileID: 2034469957}
   minXLook: -85
   maxXLook: 85
-  lookSensitivity: 0.1
+  lookSensitivity: 0.3
   canLook: 1
 --- !u!114 &1331475765
 MonoBehaviour:
@@ -9897,9 +9895,37 @@ MonoBehaviour:
     m_ActionId: e913f359-9927-4f85-aa5b-986191b72c35
     m_ActionName: Player/ObjectRotateY[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1331475764}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnOptionInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 04375184-06ab-4e29-90e8-512cff7634a3
     m_ActionName: Player/Toggle[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1331475763}
+        m_TargetAssemblyTypeName: Interaction, Assembly-CSharp
+        m_MethodName: OnRotateXInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 819a51e4-c528-479a-bd2f-dc26caae716c
+    m_ActionName: Player/ObjectRotateX[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -13099,7 +13125,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!54 &1775081778
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13218,7 +13243,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!65 &1799570538
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14329,7 +14353,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!65 &1851630390
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14814,6 +14837,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   linkedObject: {fileID: 1858445792}
+  requireNumber: 1
   isCompareTag: 0
   objectTag: 
 --- !u!4 &1936883716 stripped
@@ -19320,7 +19344,6 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
 --- !u!4 &4325715659381645299
 Transform:
   m_ObjectHideFlags: 0
@@ -19435,6 +19458,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   linkedObject: {fileID: 1464553096}
+  requireNumber: 1
   isCompareTag: 0
   objectTag: 
 --- !u!65 &6353803205886659955
@@ -20460,6 +20484,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   linkedObject: {fileID: 1749714105}
+  requireNumber: 1
   isCompareTag: 0
   objectTag: 
 --- !u!33 &8744295749036008083

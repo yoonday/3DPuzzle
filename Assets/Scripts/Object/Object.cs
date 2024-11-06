@@ -23,6 +23,7 @@ public class Object : MonoBehaviour, IInteractable
     // 상호작용 하는 동안 플레이어가 물체를 회전시키려 할 때 쓰는 변수
     private bool RotZ = false;
     private bool RotY = false;
+    private bool RotX = false;
     [SerializeField] private float rotationSpeed = 30f;
     
     // 상호작용 하는 동안 고정된것 처럼 보이게 방향을 바꾸는 데 쓰는 변수
@@ -30,12 +31,15 @@ public class Object : MonoBehaviour, IInteractable
     private Vector3 initialRot;
 
     //[SerializeField] private float maxScale = 15f;
+    private bool isCollide = false;
+    private List<GameObject> collideList;
 
     private void Start()
     {
         cameraTransform = Camera.main.transform;
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
+        collideList = new List<GameObject>();
     }
 
     private void Update()
@@ -44,14 +48,18 @@ public class Object : MonoBehaviour, IInteractable
         {
             Resize();
             fixAngle();
+            if(RotX)
+            {
+                initialRot.x += rotationSpeed * Time.deltaTime;
+            }
             if (RotY)
             {
                 initialRot.y += rotationSpeed * Time.deltaTime;
             }
-            if (RotZ)
-            {
-                initialRot.z += rotationSpeed * Time.deltaTime;
-            }
+            //if (RotZ)
+            //{
+            //    initialRot.z += rotationSpeed * Time.deltaTime;
+            //}
         }
 
         
@@ -73,6 +81,10 @@ public class Object : MonoBehaviour, IInteractable
         _rigidbody.isKinematic = false;
         isInteracting = false;
         _collider.isTrigger = false;
+        isCollide = false;
+        RotX = false;
+        RotY = false;
+        RotZ = false;
     }
 
     private void Resize()
@@ -80,7 +92,18 @@ public class Object : MonoBehaviour, IInteractable
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
         {
+            
             transform.position = hit.point - offsetFactor * targetScale.x * cameraTransform.forward;
+            //float factor = 0.1f;
+            //do
+            //{
+            //    transform.position = hit.point - factor * targetScale.x * cameraTransform.forward;
+
+            //    factor += 0.1f;
+
+            ////    if (factor >= 2.0f) break;
+            //} while (isCollide);
+            //Debug.Log(factor);
 
             float currentDistance = Vector3.Distance(cameraTransform.position, transform.position);
 
@@ -94,7 +117,7 @@ public class Object : MonoBehaviour, IInteractable
                 if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, groundMask))
                 {
                     Vector3 correctionDirection = hit.normal; // 새로운 충돌 법선
-                    transform.position += correctionDirection * offsetFactor;
+                    transform.position += correctionDirection * offsetFactor * targetScale.x * 0.01f;
                 }
             }
 
@@ -102,27 +125,59 @@ public class Object : MonoBehaviour, IInteractable
         }
     }
 
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(IsLayerMatched(other.gameObject.layer,groundMask))
+    //    {
+    //        collideList.Add(other.gameObject);
+    //    }
+    //    if (collideList.Count > 0) isCollide = true;
+    //}
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (IsLayerMatched(other.gameObject.layer, groundMask))
+    //    {
+    //        if (collideList.Contains(other.gameObject))
+    //        {
+    //            collideList.Remove(other.gameObject);
+    //        }
+    //    }
+    //    if (collideList.Count <= 0) isCollide = false;
+    //}
     private void fixAngle()
     {
         transform.eulerAngles = initialRot + CharacterManager.Instance.Player.transform.eulerAngles - initialPlayerRot; 
     }
 
+    public void RotateX()
+    {
+        RotX = true;
+    }
     public void RotateY()
     {
         RotY = true;
     }
 
-    public void RotateZ()
+    //public void RotateZ()
+    //{
+    //    RotZ = true;
+    //}
+    public void EndRotateX()
     {
-        RotZ = true;
+        RotX = false;
     }
-
     public void EndRotateY()
     {
         RotY = false;
     }
-    public void EndRotateZ()
+    //public void EndRotateZ()
+    //{
+    //    RotZ = false;
+    //}
+
+
+    private bool IsLayerMatched(int layerMask, int objectLayer)
     {
-        RotZ = false;
+        return layerMask == (layerMask | (1 << objectLayer));
     }
 }

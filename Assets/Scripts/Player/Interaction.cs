@@ -83,22 +83,22 @@ public class Interaction : MonoBehaviour
             curInteractGameObject = null;
             curInteractable = null;
         }
-        
+
     }
 
-    public void OnRotateZInput(InputAction.CallbackContext context)
-    {
-        if(context.phase == InputActionPhase.Started && interacting)
-        {
-            //isRotateZ = true;
-            curInteractGameObject.GetComponent<Object>().RotateZ();
-        }
-        if (context.phase == InputActionPhase.Canceled)
-        {
-            curInteractGameObject.GetComponent<Object>().EndRotateZ();
-            //isRotateZ = false;
-        }
-    }
+    //public void OnRotateZInput(InputAction.CallbackContext context)
+    //{
+    //    if (context.phase == InputActionPhase.Started && interacting)
+    //    {
+    //        //isRotateZ = true;
+    //        curInteractGameObject.GetComponent<Object>().RotateZ();
+    //    }
+    //    if (context.phase == InputActionPhase.Canceled)
+    //    {
+    //        if (curInteractGameObject.TryGetComponent<Object>(out Object obj)) obj.EndRotateZ();
+    //        //isRotateZ = false;
+    //    }
+    //}
 
     public void OnRotateYInput(InputAction.CallbackContext context)
     {
@@ -109,7 +109,21 @@ public class Interaction : MonoBehaviour
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            curInteractGameObject.GetComponent<Object>().EndRotateY();
+            if (curInteractGameObject.TryGetComponent<Object>(out Object obj)) obj.EndRotateY();
+            //isRotateY = false;
+        }
+    }
+
+    public void OnRotateXInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed && interacting)
+        {
+            curInteractGameObject.GetComponent<Object>().RotateX();
+        }
+
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            if (curInteractGameObject.TryGetComponent<Object>(out Object obj)) obj.EndRotateX();
             //isRotateY = false;
         }
     }
