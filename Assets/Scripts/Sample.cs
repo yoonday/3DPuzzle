@@ -19,4 +19,12 @@ public class Sample : MonoBehaviour
     {
         Debug.Log("´­¸²");
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            DataManager.Instance.LoadCheckPoint();
+        }
+    }
 }

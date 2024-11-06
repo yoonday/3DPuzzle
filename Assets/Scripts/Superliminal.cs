@@ -19,8 +19,8 @@ public class Superliminal : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked; // 커서 잠금 상태로 설정
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked; // 커서 잠금 상태로 설정
     }
 
     void Update()
