@@ -9,7 +9,9 @@ public class Object : MonoBehaviour, IInteractable
     private bool isInteracting = false;
     public LayerMask ignoreTargetMask;
     public LayerMask groundMask;
+    private Collider _collider;
 
+    // 상호작용 하는 동안 사이즈를 바꿀 떄 쓰는 변수
     private Vector3 initialPosition;
     public float offsetFactor;
     private float originalScale;
@@ -18,12 +20,21 @@ public class Object : MonoBehaviour, IInteractable
     private Transform cameraTransform;
     private Rigidbody _rigidbody;
 
+    // 상호작용 하는 동안 플레이어가 물체를 회전시키려 할 때 쓰는 변수
+    private bool RotZ = false;
+    private bool RotY = false;
+    [SerializeField] private float rotationSpeed = 30f;
+    
+    // 상호작용 하는 동안 고정된것 처럼 보이게 방향을 바꾸는 데 쓰는 변수
+    private Vector3 initialPlayerRot;
+    private Vector3 initialRot;
     [SerializeField] private float maxScale = 15f;
 
     private void Start()
     {
         cameraTransform = Camera.main.transform;
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -31,12 +42,27 @@ public class Object : MonoBehaviour, IInteractable
         if (isInteracting)
         {
             Resize();
+            fixAngle();
+            if (RotY)
+            {
+                initialRot.y += rotationSpeed * Time.deltaTime;
+            }
+            if (RotZ)
+            {
+                initialRot.z += rotationSpeed * Time.deltaTime;
+            }
         }
+
+        
     }
     public void OnInteract()
     {
         _rigidbody.isKinematic = true;
         isInteracting = true;
+        _collider.enabled = false;
+
+        initialPlayerRot = CharacterManager.Instance.Player.transform.eulerAngles;
+        initialRot = transform.eulerAngles;
 
         originalScale = transform.localScale.x;
         originalDistance = Vector3.Distance(transform.localPosition, cameraTransform.position);
@@ -45,6 +71,7 @@ public class Object : MonoBehaviour, IInteractable
     {
         _rigidbody.isKinematic = false;
         isInteracting = false;
+        _collider.enabled = true;
     }
 
     private void Resize()
@@ -73,5 +100,29 @@ public class Object : MonoBehaviour, IInteractable
 
 
         }
+    }
+
+    private void fixAngle()
+    {
+        transform.eulerAngles = initialRot + CharacterManager.Instance.Player.transform.eulerAngles - initialPlayerRot; 
+    }
+
+    public void RotateY()
+    {
+        RotY = true;
+    }
+
+    public void RotateZ()
+    {
+        RotZ = true;
+    }
+
+    public void EndRotateY()
+    {
+        RotY = false;
+    }
+    public void EndRotateZ()
+    {
+        RotZ = false;
     }
 }
