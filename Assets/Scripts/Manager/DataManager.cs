@@ -6,11 +6,28 @@ using System.IO;
 using System.ComponentModel;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public struct ObjectState
+{
+    public Vector3 position;
+    public Vector3 scale;
+
+    public ObjectState(Vector3 position, Vector3 scale)
+    {
+        this.position = position;
+        this.scale = scale;
+    }
+}
+
 public class DataManager : MonoBehaviour
 {
     static GameObject container;
-
     static DataManager _instance;
+
+    private Dictionary<GameObject, ObjectState> originalStates = new Dictionary<GameObject, ObjectState>();
+
+    string GameDataFileName = "GameData.json";
+    public Data data = new Data();
 
     public static DataManager Instance
     {
@@ -27,27 +44,70 @@ public class DataManager : MonoBehaviour
          }
     }
 
-    string GameDataFileName = "GameData.json";
+    private void Awake()
+    {
+        LoadData();
+    }
 
-    public Data data = new Data();
+    void Start()
+    {
+        // 씬에 있는 모든 오브젝트의 초기 위치 저장
+        Transform[] allObjects = FindObjectsOfType<Transform>();
 
-    public void LoadGameData()
+        foreach (var obj in allObjects)
+        {
+            if (obj.gameObject != CharacterManager.Instance.Player.gameObject || obj.gameObject != Camera.main.gameObject)
+            {
+                originalStates[obj.gameObject] = new ObjectState(obj.localPosition, obj.localScale);
+            }
+        }
+    }
+   
+
+    public void LoadData()
     {
         string filepath = Application.persistentDataPath + "/" + GameDataFileName;
 
-        if(File.Exists(filepath))
+        if (File.Exists(filepath))
         {
             string FromJsonData = File.ReadAllText(filepath);
             data = JsonUtility.FromJson<Data>(FromJsonData);
             print(filepath);
+        }
+    }
 
-            for (int i = 0; i < data.isComplete.Length; i++)
+    public void LoadStage(int stageNum)
+    {
+        if (data.isComplete[stageNum])
+        {
+            SceneManager.LoadScene("Stage");
+            CharacterManager.Instance.Player.transform.position = data.respawnPoint[stageNum];
+        }
+    }
+
+    public void LoadCheckPoint()
+    {          
+        int lastCompletedStage = -1;
+
+        for (int i = data.isComplete.Length - 1; i >= 0; i--)
+        {
+            if (data.isComplete[i])
             {
-                if (data.isComplete[i])
-                {
-                    CharacterManager.Instance.Player.transform.position = data.respawnPoint[i];
-                }
+                lastCompletedStage = i;
+                break;
             }
+        }
+
+        if (lastCompletedStage != -1)
+        {
+            foreach (var pair in originalStates)
+            {
+                pair.Key.transform.localPosition = pair.Value.position;
+                pair.Key.transform.localScale = pair.Value.scale;
+            }
+
+            //SceneManager.LoadScene("TestScene_Seo");
+            CharacterManager.Instance.Player.transform.position = data.respawnPoint[lastCompletedStage];
         }
     }
 
@@ -57,7 +117,11 @@ public class DataManager : MonoBehaviour
         string filePath = Application.persistentDataPath + "/" + GameDataFileName;
 
         File.WriteAllText(filePath, ToJsonData);
-
         print(filePath);       
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGameData();
     }
 }

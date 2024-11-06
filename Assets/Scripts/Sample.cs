@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class Sample : MonoBehaviour
 {
+    DataManager dataManager;
     private void Start()
     {
-        DataManager.Instance.LoadGameData();
-    }
-
-    private void OnApplicationQuit()
-    {
-        DataManager.Instance.SaveGameData();
+        DataManager.Instance.LoadStage(0);
     }
 
     public void Test(int test)
     {
-        DataManager.Instance.SaveGameData();
+        DataManager.Instance.LoadStage(test);
     }
 
     public void Restart()
     {
-        DataManager.Instance.LoadGameData();
         Debug.Log("´­¸²");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            DataManager.Instance.LoadCheckPoint();
+        }
     }
 }
