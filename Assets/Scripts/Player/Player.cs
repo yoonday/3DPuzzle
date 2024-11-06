@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
             CharacterManager.Instance.Player = this;
         }
 
-        Debug.Log(CharacterManager.Instance.Player);
         controller = GetComponent<PlayerController>();
     }
 }

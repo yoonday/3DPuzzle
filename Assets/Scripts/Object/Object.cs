@@ -28,7 +28,8 @@ public class Object : MonoBehaviour, IInteractable
     // 상호작용 하는 동안 고정된것 처럼 보이게 방향을 바꾸는 데 쓰는 변수
     private Vector3 initialPlayerRot;
     private Vector3 initialRot;
-    [SerializeField] private float maxScale = 15f;
+
+    //[SerializeField] private float maxScale = 15f;
 
     private void Start()
     {
