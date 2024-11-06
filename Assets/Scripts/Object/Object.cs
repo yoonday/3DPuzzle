@@ -30,16 +30,22 @@ public class Object : MonoBehaviour, IInteractable
     private Vector3 initialPlayerRot;
     private Vector3 initialRot;
 
-    //[SerializeField] private float maxScale = 15f;
-    private bool isCollide = false;
-    private List<GameObject> collideList;
+    [SerializeField]
+    List<GameObject> _objects = new List<GameObject>();
+
+    int groundLayer;
+    int offGroundLayer;
+    public bool notControlTrigger = false;
+    public bool includePlayer = false;
+   
 
     private void Start()
     {
         cameraTransform = Camera.main.transform;
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        collideList = new List<GameObject>();
+        groundLayer = LayerMask.NameToLayer("Ground");
+        offGroundLayer = LayerMask.NameToLayer("OffGround");
     }
 
     private void Update()
@@ -64,24 +70,34 @@ public class Object : MonoBehaviour, IInteractable
 
         
     }
-    public void OnInteract()
+    public bool OnInteract()
     {
+        if (includePlayer) return false;
+
         _rigidbody.isKinematic = true;
         isInteracting = true;
-        _collider.isTrigger = true;
+        if (!notControlTrigger)
+        {
+            _collider.isTrigger = true;
+        }
 
         initialPlayerRot = CharacterManager.Instance.Player.transform.eulerAngles;
         initialRot = transform.eulerAngles;
 
         originalScale = transform.localScale.x;
         originalDistance = Vector3.Distance(transform.localPosition, cameraTransform.position);
+
+        return true;
     }
     public void EndInteract()
     {
         _rigidbody.isKinematic = false;
         isInteracting = false;
-        _collider.isTrigger = false;
-        isCollide = false;
+        if (!notControlTrigger)
+        {
+            _collider.isTrigger = false;
+        }
+
         RotX = false;
         RotY = false;
         RotZ = false;
@@ -179,5 +195,36 @@ public class Object : MonoBehaviour, IInteractable
     private bool IsLayerMatched(int layerMask, int objectLayer)
     {
         return layerMask == (layerMask | (1 << objectLayer));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Player player = other.GetComponent<Player>();
+        if (!player) return;
+        includePlayer = true;
+
+     
+
+        EndInteract();
+        for (int i = 0; i < _objects.Count; i++)
+        {
+            _objects[i].layer = groundLayer;
+        }
+
+
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Player player = other.GetComponent<Player>();
+        if (!player) return;
+        includePlayer = false;
+
+
+        for (int i = 0; i < _objects.Count; i++)
+        {
+            _objects[i].layer = offGroundLayer;
+        }
     }
 }

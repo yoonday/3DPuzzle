@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
-    public void OnInteract();
+    public bool OnInteract();
     public void EndInteract();
 }
 
@@ -71,10 +71,18 @@ public class Interaction : MonoBehaviour
 
     public void OnInteractInput(InputAction.CallbackContext context)
     {
+        if (curInteractable == null)
+        {
+            Debug.Log("비어있음");
+            return;
+        }
+
         if (context.phase == InputActionPhase.Started && curInteractable != null && !interacting)
         {
-            curInteractable.OnInteract();
-            interacting = true;
+            if (curInteractable.OnInteract())
+            {
+                interacting = true;
+            }
         }
         else if (context.phase == InputActionPhase.Started && interacting)
         {
