@@ -59,7 +59,7 @@ public class Object : MonoBehaviour, IInteractable
     {
         _rigidbody.isKinematic = true;
         isInteracting = true;
-        _collider.enabled = false;
+        _collider.isTrigger = true;
 
         initialPlayerRot = CharacterManager.Instance.Player.transform.eulerAngles;
         initialRot = transform.eulerAngles;
@@ -71,7 +71,7 @@ public class Object : MonoBehaviour, IInteractable
     {
         _rigidbody.isKinematic = false;
         isInteracting = false;
-        _collider.enabled = true;
+        _collider.isTrigger = false;
     }
 
     private void Resize()
@@ -89,13 +89,12 @@ public class Object : MonoBehaviour, IInteractable
 
             if (Physics.CheckBox(transform.position, transform.localScale * 0.5f, Quaternion.identity, groundMask))
             {
-                // CheckBox ï¿½æµ¹ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Raycastï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
+                // CheckBox Ãæµ¹ ÈÄ »õ·Î Raycast·Î ¹ý¼±À» ¾ò¾î Ãæµ¹ º¸Á¤
                 if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, groundMask))
                 {
-                   Vector3 correctionDirection = hit.normal; // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
+                    Vector3 correctionDirection = hit.normal; // »õ·Î¿î Ãæµ¹ ¹ý¼±
                     transform.position += correctionDirection * offsetFactor;
                 }
-
             }
 
 
