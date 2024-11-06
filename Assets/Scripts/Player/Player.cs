@@ -13,11 +13,7 @@ public class Player : MonoBehaviour
         {
             CharacterManager.Instance.Player = this;
         }
-        else
-        {
 
-        }
         controller = GetComponent<PlayerController>();
-
     }
 }
