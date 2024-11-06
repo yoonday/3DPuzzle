@@ -39,4 +39,9 @@ public class CharacterManager : MonoBehaviour
             }
         }
     }
+
+    //private void Start()
+    //{
+    //    Player.transform.position = DataManager.Instance.data.respawnPoint[GameManager.Instance.StageNum];
+    //}
 }

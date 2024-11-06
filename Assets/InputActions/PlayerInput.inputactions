@@ -42,9 +42,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ObjectRotateZ",
+                    "name": "ObjectRotateX",
                     "type": "Button",
-                    "id": "703b7a1d-0fe9-499e-868a-c2053f2c049a",
+                    "id": "819a51e4-c528-479a-bd2f-dc26caae716c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,17 +160,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1a83fa50-3a37-4d5c-afc2-596600e69fca",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ObjectRotateZ",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3f285f6c-a196-4c32-9629-7c0d3efb32b8",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -188,6 +177,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdb5015a-5917-4fd4-a5f6-f9c1884b9016",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ObjectRotateX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
