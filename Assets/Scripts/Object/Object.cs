@@ -85,7 +85,7 @@ public class Object : MonoBehaviour, IInteractable
         initialRot = transform.eulerAngles;
 
         originalScale = transform.localScale.x;
-        originalDistance = Vector3.Distance(transform.localPosition, cameraTransform.position);
+        originalDistance = Vector3.Distance(transform.position, cameraTransform.position); // Æ®·¯ºí½´ÆÃ ¿ùµåÁÂÇ¥
 
         return true;
     }
