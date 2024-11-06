@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2556591089194199278}
   - component: {fileID: 3463606946657342199}
   - component: {fileID: 3794694382912235020}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 1460177445316624919}
   - component: {fileID: 4895800843472749376}
   - component: {fileID: 2176936856453710690}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 208484928492261271}
   - component: {fileID: 3787528568232787044}
   - component: {fileID: 4689378054313401020}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 3743297837036656834}
   - component: {fileID: 2492404417525580050}
   - component: {fileID: 7098159842412902046}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stage3_BoxDoorBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +437,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   linkedObject: {fileID: 1908408837364943409}
+  isCompareTag: 0
+  objectTag: 
 --- !u!1 &2184170786801326064
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +451,7 @@ GameObject:
   - component: {fileID: 408991101907778543}
   - component: {fileID: 8080736250646531740}
   - component: {fileID: 185202441117820509}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,8 +573,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 576643853326462261}
   - {fileID: 8431977656386660282}
@@ -600,13 +602,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreTargetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 183
   groundMask:
     serializedVersion: 2
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
-  maxScale: 15
+  _objects:
+  - {fileID: 2184170786801326064}
+  - {fileID: 5114536814145504783}
+  - {fileID: 1508347023372023031}
+  - {fileID: 932533041083536314}
+  - {fileID: 3701944510516952451}
+  - {fileID: 5299233247413226128}
+  - {fileID: 5394737952678123589}
+  - {fileID: 443625316457386364}
+  notControlTrigger: 1
+  includePlayer: 0
 --- !u!54 &5561352803038260952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -649,12 +661,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 15.5, y: 15.5, z: 15.5}
+  m_Center: {x: 0, y: 7.45, z: 0}
 --- !u!1 &3701944510516952451
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +679,7 @@ GameObject:
   - component: {fileID: 3945380774203965527}
   - component: {fileID: 8782679144210509641}
   - component: {fileID: 1648628600213268361}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +784,7 @@ GameObject:
   - component: {fileID: 36493113140258090}
   - component: {fileID: 4672442177696964666}
   - component: {fileID: 2778853918284466535}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +889,7 @@ GameObject:
   - component: {fileID: 7615697677987210972}
   - component: {fileID: 3530416075992212503}
   - component: {fileID: 4334538275199015366}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +994,7 @@ GameObject:
   - component: {fileID: 7132537543639306673}
   - component: {fileID: 1024326310625349107}
   - component: {fileID: 740311283717560912}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1089,7 +1101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 527661604897297439, guid: 3bac5f92d57f8074db9ab73965f30b2c, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 527661604897297439, guid: 3bac5f92d57f8074db9ab73965f30b2c, type: 3}
       propertyPath: m_IsActive
@@ -1097,7 +1109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6473923983494183877, guid: 3bac5f92d57f8074db9ab73965f30b2c, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7506024862124325268, guid: 3bac5f92d57f8074db9ab73965f30b2c, type: 3}
       propertyPath: m_LocalPosition.x
