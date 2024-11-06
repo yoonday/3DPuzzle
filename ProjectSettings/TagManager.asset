@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Key
   - Item
+  - Key_stage2
   layers:
   - Default
   - TransparentFX
