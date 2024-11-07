@@ -115,7 +115,7 @@ public class Interaction : MonoBehaviour
             curInteractGameObject.GetComponent<Object>().RotateY();
         }
 
-        if (context.phase == InputActionPhase.Canceled)
+        if (context.phase == InputActionPhase.Canceled && interacting)
         {
             if (curInteractGameObject.TryGetComponent<Object>(out Object obj)) obj.EndRotateY();
             //isRotateY = false;
@@ -129,7 +129,7 @@ public class Interaction : MonoBehaviour
             curInteractGameObject.GetComponent<Object>().RotateX();
         }
 
-        if (context.phase == InputActionPhase.Canceled)
+        if (context.phase == InputActionPhase.Canceled && interacting)
         {
             if (curInteractGameObject.TryGetComponent<Object>(out Object obj)) obj.EndRotateX();
             //isRotateY = false;

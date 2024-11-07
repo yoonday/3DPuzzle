@@ -807,6 +807,8 @@ MonoBehaviour:
     m_Bits: 128
   offsetFactor: 1
   rotationSpeed: 30
+  maxScale: 30
+  minScale: 0.1
   _objects:
   - {fileID: 2184170786801326064}
   - {fileID: 5114536814145504783}
@@ -816,6 +818,8 @@ MonoBehaviour:
   - {fileID: 5299233247413226128}
   - {fileID: 5394737952678123589}
   - {fileID: 443625316457386364}
+  InteracableObjects:
+  - {fileID: 1164562804348898687}
   notControlTrigger: 1
   includePlayer: 0
 --- !u!54 &5561352803038260952
@@ -984,7 +988,7 @@ GameObject:
   - component: {fileID: 8202628801293905932}
   - component: {fileID: 2731724984146218060}
   - component: {fileID: 408638787456550118}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Stage3_DoorBtn (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1536,6 +1540,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: artifact_InBox
       objectReference: {fileID: 0}
+    - target: {fileID: 22296623325146280, guid: 648464888ec96934ebdd31b8611baf2d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 794012346464613906, guid: 648464888ec96934ebdd31b8611baf2d, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -1597,6 +1605,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 648464888ec96934ebdd31b8611baf2d, type: 3}
+--- !u!1 &1164562804348898687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 22296623325146280, guid: 648464888ec96934ebdd31b8611baf2d, type: 3}
+  m_PrefabInstance: {fileID: 1181751912398397911}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1973292555582379973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 794012346464613906, guid: 648464888ec96934ebdd31b8611baf2d, type: 3}
