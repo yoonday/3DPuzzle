@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.ComponentModel;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 [System.Serializable]
 public struct ObjectState
@@ -23,7 +24,7 @@ public class DataManager : MonoBehaviour
 {
     static GameObject container;
     static DataManager _instance;
-
+    
     public Dictionary<GameObject, ObjectState> originalStates = new Dictionary<GameObject, ObjectState>();
 
     string GameDataFileName = "GameData.json";
@@ -73,23 +74,6 @@ public class DataManager : MonoBehaviour
         LoadData();
     }
 
-    void Start()
-    {
-        // 씬에 있는 모든 오브젝트의 초기 위치 저장
-        Transform[] allObjects = FindObjectsOfType<Transform>();
-        data.isComplete[1] = true;
-        Debug.Log(data.respawnPoint[1]);
-
-        foreach (var obj in allObjects)
-        {
-            if (obj.gameObject != CharacterManager.Instance.Player || obj.gameObject != Camera.main)
-            {
-                originalStates[obj.gameObject] = new ObjectState(obj.localPosition, obj.localScale);
-            }
-        }
-    }
-   
-
     public void LoadData()
     {
         string filepath = Application.persistentDataPath + "/" + GameDataFileName;
@@ -105,13 +89,14 @@ public class DataManager : MonoBehaviour
     {
         if (data.isComplete[stageNum])
         {
-            //SceneManager.LoadScene("Stage");
             CharacterManager.Instance.Player.transform.position = data.respawnPoint[stageNum];
         }
     }
 
     public void LoadCheckPoint()
-    {          
+    {
+        Object[] objects = GameObject.FindObjectsOfType<Object>();
+
         int lastCompletedStage = -1;
 
         for (int i = data.isComplete.Length - 1; i >= 0; i--)
@@ -125,10 +110,9 @@ public class DataManager : MonoBehaviour
 
         if (lastCompletedStage != -1)
         {
-            foreach (var pair in originalStates)
+            foreach (var obj in objects)
             {
-                pair.Key.transform.localPosition = pair.Value.position;
-                pair.Key.transform.localScale = pair.Value.scale;
+                obj.Initialize();
             }
 
             CharacterManager.Instance.Player.transform.position = data.respawnPoint[lastCompletedStage];

@@ -15,11 +15,10 @@ public class StartButton : MonoBehaviour
     {
         GameManager.Instance.stageNum = 0;      
         SceneManager.LoadScene("Stage");
-        //DataManager.Instance.LoadData();
-        //DataManager.Instance.data.isComplete[1] = false;
-        //DataManager.Instance.data.isComplete[2] = false;
-        //DataManager.Instance.data.isComplete[3] = false;
-        
+        DataManager.Instance.data.isComplete[1] = false;
+        DataManager.Instance.data.isComplete[2] = false;
+        DataManager.Instance.data.isComplete[3] = false;
+
         //CharacterManager.Instance.Player.transform.position = DataManager.Instance.data.respawnPoint[0];
         //DataManager.Instance.LoadCheckPoint();
     }
@@ -27,6 +26,15 @@ public class StartButton : MonoBehaviour
     public void OnStage2()
     {
         GameManager.Instance.stageNum = 1;
+        DataManager.Instance.data.isComplete[2] = false;
+        DataManager.Instance.data.isComplete[3] = false;
+        SceneManager.LoadScene("Stage");
+    }
+
+    public void OnStage3()
+    {
+        GameManager.Instance.stageNum = 2;
+        DataManager.Instance.data.isComplete[3] = false;
         SceneManager.LoadScene("Stage");
     }
 
