@@ -30,14 +30,25 @@ public class Object : MonoBehaviour, IInteractable
     private Vector3 initialPlayerRot;
     private Vector3 initialRot;
 
+    [SerializeField] private float maxScale = 30f;
+    [SerializeField] private float minScale = 0.1f;
+
     [SerializeField]
     List<GameObject> _objects = new List<GameObject>();
+    [SerializeField]
+    List<GameObject> InteracableObjects = new List<GameObject>();
+
 
     int groundLayer;
     int offGroundLayer;
+    int interactableLayer;
     public bool notControlTrigger = false;
     public bool includePlayer = false;
-   
+
+    private Transform parentTransform;
+    private Vector3 initialPos;
+    private Vector3 initialScale;
+    private Vector3 initialRotation;
 
     private void Start()
     {
@@ -46,6 +57,13 @@ public class Object : MonoBehaviour, IInteractable
         _collider = GetComponent<Collider>();
         groundLayer = LayerMask.NameToLayer("Ground");
         offGroundLayer = LayerMask.NameToLayer("OffGround");
+        interactableLayer = LayerMask.NameToLayer("Interactable");
+
+        parentTransform = transform.parent;
+        initialPos = transform.localPosition;
+        initialScale = transform.localScale;
+        initialRotation = transform.eulerAngles;
+
     }
 
     private void Update()
@@ -72,8 +90,10 @@ public class Object : MonoBehaviour, IInteractable
     }
     public bool OnInteract()
     {
+
         if (includePlayer) return false;
 
+        CancelInvoke();
         _rigidbody.isKinematic = true;
         isInteracting = true;
         if (!notControlTrigger)
@@ -101,6 +121,8 @@ public class Object : MonoBehaviour, IInteractable
         RotX = false;
         RotY = false;
         RotZ = false;
+
+        Invoke("Initialize", 10f);
     }
 
     private void Resize()
@@ -125,7 +147,19 @@ public class Object : MonoBehaviour, IInteractable
 
             float s = currentDistance / originalDistance;
             targetScale.x = targetScale.y = targetScale.z = s;
+            //s = Mathf.Clamp(s * originalScale, minScale, maxScale);
             transform.localScale = targetScale * originalScale;
+
+            float scaleX = transform.localScale.x;
+            if (scaleX < minScale)
+            {
+                transform.localScale = new Vector3(minScale, minScale, minScale);
+            }
+            else if (scaleX > maxScale)
+            {
+                transform.localScale = new Vector3(maxScale, maxScale, maxScale);
+            }
+
 
             if (Physics.CheckBox(transform.position, transform.localScale * 0.5f, Quaternion.identity, groundMask))
             {
@@ -203,15 +237,17 @@ public class Object : MonoBehaviour, IInteractable
         if (!player) return;
         includePlayer = true;
 
-     
+        
 
         EndInteract();
         for (int i = 0; i < _objects.Count; i++)
         {
             _objects[i].layer = groundLayer;
         }
-
-
+        for (int i = 0; i < InteracableObjects.Count; i++)
+        {
+            InteracableObjects[i].layer = interactableLayer;
+        }
 
     }
 
@@ -226,5 +262,20 @@ public class Object : MonoBehaviour, IInteractable
         {
             _objects[i].layer = offGroundLayer;
         }
+        for (int i = 0; i < InteracableObjects.Count; i++)
+        {
+            InteracableObjects[i].layer = offGroundLayer;
+        }
+    }
+
+    public void Initialize()
+    {
+        if(parentTransform != null && parentTransform != transform.parent)
+        {
+            transform.parent = parentTransform;
+        }
+        transform.localPosition = initialPos;
+        transform.localScale = initialScale;
+        transform.eulerAngles = initialRotation;
     }
 }

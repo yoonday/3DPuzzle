@@ -24,7 +24,7 @@ public class DataManager : MonoBehaviour
     static GameObject container;
     static DataManager _instance;
 
-    private Dictionary<GameObject, ObjectState> originalStates = new Dictionary<GameObject, ObjectState>();
+    public Dictionary<GameObject, ObjectState> originalStates = new Dictionary<GameObject, ObjectState>();
 
     string GameDataFileName = "GameData.json";
     public Data data = new Data();
