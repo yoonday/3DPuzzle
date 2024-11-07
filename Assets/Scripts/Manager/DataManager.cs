@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.ComponentModel;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 [System.Serializable]
 public struct ObjectState
@@ -72,23 +73,6 @@ public class DataManager : MonoBehaviour
         
         LoadData();
     }
-
-    void Start()
-    {
-        // 씬에 있는 모든 오브젝트의 초기 위치 저장
-        Transform[] allObjects = FindObjectsOfType<Transform>();
-        data.isComplete[1] = true;
-        Debug.Log(data.respawnPoint[1]);
-
-        foreach (var obj in allObjects)
-        {
-            if (obj.gameObject != CharacterManager.Instance.Player || obj.gameObject != Camera.main)
-            {
-                originalStates[obj.gameObject] = new ObjectState(obj.localPosition, obj.localScale);
-            }
-        }
-    }
-   
 
     public void LoadData()
     {

@@ -13,8 +13,8 @@ public class ClearCondition : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             DataManager.Instance.data.isComplete[clearConditionNum] = true;
-            DataManager.Instance.data.respawnPoint[clearConditionNum] = gameObject.transform.position;
-            Debug.Log($"{DataManager.Instance.data.isComplete[clearConditionNum]} {DataManager.Instance.data.respawnPoint[clearConditionNum]}");
+            DataManager.Instance.data.respawnPoint[clearConditionNum] = transform.position;
+            Debug.Log(DataManager.Instance.data.respawnPoint[clearConditionNum]);
         }
     }
 }
