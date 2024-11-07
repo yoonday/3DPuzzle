@@ -277,5 +277,6 @@ public class Object : MonoBehaviour, IInteractable
         transform.localPosition = initialPos;
         transform.localScale = initialScale;
         transform.eulerAngles = initialRotation;
+        _rigidbody.velocity = Vector3.zero;
     }
 }

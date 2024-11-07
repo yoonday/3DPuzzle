@@ -26,10 +26,12 @@ public class Interaction : MonoBehaviour
 
     public LayerMask ignoreTargetMask;
 
+    private AudioSource audioSource;
+
     void Start()
     {
         camera = Camera.main;
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -82,6 +84,7 @@ public class Interaction : MonoBehaviour
             if (curInteractable.OnInteract())
             {
                 interacting = true;
+                audioSource.Play();
             }
         }
         else if (context.phase == InputActionPhase.Started && interacting)
