@@ -122,7 +122,7 @@ public class Object : MonoBehaviour, IInteractable
         RotY = false;
         RotZ = false;
 
-        Invoke("Initialize", 10f);
+        Invoke("Initialize", 12f);
     }
 
     private void Resize()

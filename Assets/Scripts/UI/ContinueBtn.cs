@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ContinueButton : MonoBehaviour
 {
-    public void PlayContinue()
+
+    public void Continue()
     {
-        SceneManager.LoadScene("TestScene_Seo");
+        SceneManager.LoadScene("Stage");
+        DataManager.Instance.LoadCheckPoint();
     }
 }

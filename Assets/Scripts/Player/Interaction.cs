@@ -75,7 +75,6 @@ public class Interaction : MonoBehaviour
     {
         if (curInteractable == null)
         {
-            Debug.Log("비어있음");
             return;
         }
 

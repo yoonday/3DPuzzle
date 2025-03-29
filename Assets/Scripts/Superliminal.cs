@@ -31,6 +31,7 @@ public class Superliminal : MonoBehaviour
 
     void HandleInput()
     {
+        Debug.Log("1");
         // 마우스 좌 클릭 확인
         if (Input.GetMouseButtonDown(0))
         {

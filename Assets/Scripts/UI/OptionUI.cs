@@ -40,7 +40,7 @@ public class OptionUI : MonoBehaviour
     public void Resume()
     {
         OptionToggle();
-        CharacterManager.Instance.Player.controller.ToggleCursor(); // 바꿔야 하는데 어떻게 바꿔야할지 모르겠음
+        CharacterManager.Instance.Player.controller.ToggleCursor();
     }
     
     public void Restart()
@@ -58,6 +58,11 @@ public class OptionUI : MonoBehaviour
 
     public void MainMenu()
     {
+        if (gameObject.activeSelf)
+        {
+            Time.timeScale = 1f;
+            gameObject.SetActive(false);
+        }
         SceneManager.LoadScene("MainScene");
     }
 
